@@ -28,6 +28,19 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 ## Setup the Environment
 
+- Install python 3
+
+```bash
+#Update package list
+sudo apt-get update
+#Install Python 3
+sudo apt-get install python3
+#Verify the installation
+python3 --version
+#Install pip
+sudo apt-get install python3-pip
+```
+
 - Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv.
 
 ```bash
@@ -50,6 +63,53 @@ source .devops/bin/activate
 ### Kubernetes Steps
 
 - Setup and Configure Docker locally
+
+  - Install Docker: Go to https://www.docker.com/
+    Windows: Download and install Docker Desktop from the official website.
+    macOS: Download and install Docker Desktop from the official website.
+    Linux: Follow the instructions for your Linux distribution on the official Docker website.
+  - Verify the installation:
+    ```bash
+    docker --version
+    ```
+
 - Setup and Configure Kubernetes locally
+
+  - Install minikube: Go to https://minikube.sigs.k8s.io/docs/start/
+  - Start minikube:
+    ```bash
+      minikube start
+    ```
+  - Verify the installation
+    ```bash
+      kubectl get node
+    ```
+
 - Create Flask app in Container
+
+  - Build the Docker image
+    ```bash
+      docker build -t my-flask-app .
+    ```
+  - Run the Docker container
+    ```bash
+      docker run -p 8000:80 my-flask-app
+    ```
+
 - Run via kubectl
+  - Push the Docker image to a container registry:
+    ```bash
+      docker push <dockerPath>:<tagname>
+    ```
+  - Create a Kubernetes deployment:
+    ```bash
+      kubectl create deploy <example-name> --image=<dockerPath> --port=<PORT>
+    ```
+  - Check pod is ready running:
+    ```bash
+      kubectl get pod
+    ```
+  - Forward port after pod is running:
+    ```bash
+      kubectl port-forward deployment/<example-name> <HOST_PORT>:<CONTAINER_PORT>
+    ```
