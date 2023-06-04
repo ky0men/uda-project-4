@@ -93,7 +93,7 @@ source .devops/bin/activate
     ```
   - Run the Docker container
     ```bash
-      docker run -p 8000:80 my-flask-app
+      docker run -p <HOST_PORT>:<CONTAINER_PORT> my-flask-app
     ```
 
 - Run via kubectl
@@ -103,7 +103,7 @@ source .devops/bin/activate
     ```
   - Create a Kubernetes deployment:
     ```bash
-      kubectl create deploy <example-name> --image=<dockerPath> --port=<PORT>
+      kubectl create deploy <example-name> --image=<dockerPath> --port=<HOST_PORT>
     ```
   - Check pod is ready running:
     ```bash
@@ -113,3 +113,19 @@ source .devops/bin/activate
     ```bash
       kubectl port-forward deployment/<example-name> <HOST_PORT>:<CONTAINER_PORT>
     ```
+
+### File and directory description
+
+| Directory/File         | Description                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `.circleci/config.yml` | CircleCI configuration                                                                |
+| `Dockerfile`           | Configuration file that can be used to build a Docker Image                           |
+| `Makefile`             | configuration file that contains rules for setup evironment, install dependencies.... |
+| `model_data`           | Data for train housing prices in Boston                                               |
+| `output_txt_files`     | Docker and Kubernetes output log                                                      |
+| `app.py`               | API for predicting housing prices in Boston                                           |
+| `make_prediction.sh`   | Calls prediction API                                                                  |
+| `run_docker.sh`        | Shell script for create and run docker                                                |
+| `run_kubernetes.sh`    | Shell script to deploy and forward port kubernetes                                    |
+| `upload_docker.sh`     | Shell script for upload image to docker hub repository                                |
+| `requirements.txt`     | Requirements dependencies                                                             |
